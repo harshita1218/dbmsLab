@@ -1,0 +1,604 @@
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Sat Jan 27 14:01:59 2024
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+Enter user-name: cce522@ictorcl
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Enter user-name: cce522@ictorcl
+Enter password:
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+SQL> create table person(driver_id varchar(20),
+  2  name varchar(50),add varchar(100))
+  3  ;
+name varchar(50),add varchar(100))
+                 *
+ERROR at line 2:
+ORA-00904: : invalid identifier
+
+
+SQL> create table person(driverID varchar(20),name varchar(50),address varchar(100));
+
+Table created.
+
+SQL> update person primary key(driverID);
+update person primary key(driverID)
+                      *
+ERROR at line 1:
+ORA-00971: missing SET keyword
+
+
+SQL> updare person
+SP2-0734: unknown command beginning "updare per..." - rest of line ignored.
+SQL> update person
+  2  set primary key(driverID);
+set primary key(driverID)
+            *
+ERROR at line 2:
+ORA-00927: missing equal sign
+
+
+SQL> drop table person
+  2  ;
+
+Table dropped.
+
+SQL> create table person(driver_id varchar(20),name varchar(50),address varchar(100),primary key(driver_id));
+
+Table created.
+
+SQL> create table car(regno varchar(20),model varchar(30),year date));
+create table car(regno varchar(20),model varchar(30),year date))
+                                                               *
+ERROR at line 1:
+ORA-00922: missing or invalid option
+
+
+SQL> create table car(regno varchar(20),model varchar(30),year int);
+
+Table created.
+
+SQL> create table accident(report_number int,accd_date date,location varchar(50));
+
+Table created.
+
+SQL> create table owns(driver_id varchar(30),regno varchar(20));
+
+Table created.
+
+SQL> create table participated(driver_id varchar(30),regno varchar(20),report_number int,damage_amount int);
+
+Table created.
+
+SQL> alter table person add primary key(driver_id);
+alter table person add primary key(driver_id)
+                       *
+ERROR at line 1:
+ORA-02260: table can have only one primary key
+
+
+SQL> alter table car add primary key(regno);
+
+Table altered.
+
+SQL> alter table accident add primary key(report_number);
+
+Table altered.
+
+SQL> alter table owns add primary key(driver_id);
+
+Table altered.
+
+SQL> alter table participated add primary key(driver_id);
+
+Table altered.
+
+SQL> alter table participated add primary key(regno);
+alter table participated add primary key(regno)
+                             *
+ERROR at line 1:
+ORA-02260: table can have only one primary key
+
+
+SQL> alter table participated add primary key(regno,driver_id,report_number);
+alter table participated add primary key(regno,driver_id,report_number)
+                             *
+ERROR at line 1:
+ORA-02260: table can have only one primary key
+
+
+SQL> desc participated
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DRIVER_ID                                 NOT NULL VARCHAR2(30)
+ REGNO                                              VARCHAR2(20)
+ REPORT_NUMBER                                      NUMBER(38)
+ DAMAGE_AMOUNT                                      NUMBER(38)
+
+SQL> alter table participated drop constraint primary key(driver_id);
+alter table participated drop constraint primary key(driver_id)
+                                                 *
+ERROR at line 1:
+ORA-01735: invalid ALTER TABLE option
+
+
+SQL> alter table participated drop column driver_id;
+
+Table altered.
+
+SQL> alter table participated add column driver_id varchar(30);
+alter table participated add column driver_id varchar(30)
+                             *
+ERROR at line 1:
+ORA-00904: : invalid identifier
+
+
+SQL> alter table participated add driver_id varchar(30);
+
+Table altered.
+
+SQL> alter table participated add primary key(driver_id,regno,report_number);
+
+Table altered.
+
+SQL> desc owns
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DRIVER_ID                                 NOT NULL VARCHAR2(30)
+ REGNO                                              VARCHAR2(20)
+
+SQL> alter table owns drop column driver_id;
+
+Table altered.
+
+SQL> alter table owns add driver_id varchar(30);
+
+Table altered.
+
+SQL> alter table owns add primary key(driver_id,regno);
+
+Table altered.
+
+SQL> desc owns
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                     NOT NULL VARCHAR2(20)
+ DRIVER_ID                                 NOT NULL VARCHAR2(30)
+
+SQL> desc person
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DRIVER_ID                                 NOT NULL VARCHAR2(20)
+ NAME                                               VARCHAR2(50)
+ ADDRESS                                            VARCHAR2(100)
+
+SQL> desc car
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                     NOT NULL VARCHAR2(20)
+ MODEL                                              VARCHAR2(30)
+ YEAR                                               NUMBER(38)
+
+SQL> desc accident
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REPORT_NUMBER                             NOT NULL NUMBER(38)
+ ACCD_DATE                                          DATE
+ LOCATION                                           VARCHAR2(50)
+
+SQL> desc owns
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                     NOT NULL VARCHAR2(20)
+ DRIVER_ID                                 NOT NULL VARCHAR2(30)
+
+SQL> desc participated
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                     NOT NULL VARCHAR2(20)
+ REPORT_NUMBER                             NOT NULL NUMBER(38)
+ DAMAGE_AMOUNT                                      NUMBER(38)
+ DRIVER_ID                                 NOT NULL VARCHAR2(30)
+
+SQL> alter table participated add foreign key(driver_id) references person
+  2  ;
+
+Table altered.
+
+SQL> alter table participated add foreign key(regno) references car;
+
+Table altered.
+
+SQL> alter table participated add foreign key(report_number) references accident;
+
+Table altered.
+
+SQL> alter table owns add foreign key(driver_id) references person;
+
+Table altered.
+
+SQL> alter table owns add foreign key(regno) references car;
+
+Table altered.
+
+SQL> desc owns
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                     NOT NULL VARCHAR2(20)
+ DRIVER_ID                                 NOT NULL VARCHAR2(30)
+
+SQL> insert into person
+  2  values(1234,Aayu,Delhi);
+values(1234,Aayu,Delhi)
+                 *
+ERROR at line 2:
+ORA-00984: column not allowed here
+
+
+SQL> insert inbto person
+  2  values(1234,'aayu','delhi');
+insert inbto person
+       *
+ERROR at line 1:
+ORA-00925: missing INTO keyword
+
+
+SQL> insert table into person
+  2  values(1234,'aayu','delhi');
+insert table into person
+       *
+ERROR at line 1:
+ORA-00925: missing INTO keyword
+
+
+SQL> insert into person
+  2  values(1234,'aayu','delhi');
+
+1 row created.
+
+SQL> insert into person
+  2  values(2345,'rajeev','delhi');
+
+1 row created.
+
+SQL> insert into person
+  2  values(3456,'nutan','delhi');
+
+1 row created.
+
+SQL> insert into person
+  2  values(4567,'raj','hyd');
+
+1 row created.
+
+SQL> insert into person
+  2  values(5678,'sony','delhi');
+
+1 row created.
+
+SQL> desc person
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DRIVER_ID                                 NOT NULL VARCHAR2(20)
+ NAME                                               VARCHAR2(50)
+ ADDRESS                                            VARCHAR2(100)
+
+SQL> select*from person;
+
+DRIVER_ID            NAME
+-------------------- --------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+1234                 aayu
+delhi
+
+2345                 rajeev
+delhi
+
+3456                 nutan
+delhi
+
+
+DRIVER_ID            NAME
+-------------------- --------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+4567                 raj
+hyd
+
+5678                 sony
+delhi
+
+
+SQL> insert into car
+  2  values(987,'suzuki',2024);
+
+1 row created.
+
+SQL> insert into car
+  2  values(876,audi,2023);
+values(876,audi,2023)
+           *
+ERROR at line 2:
+ORA-00984: column not allowed here
+
+
+SQL> insert into car
+  2  values(876,'audi',2023);
+
+1 row created.
+
+SQL> insert into car
+  2  values(765,'xl6',2022);
+
+1 row created.
+
+SQL> insert into car
+  2  values(654,'bmw',2023);
+
+1 row created.
+
+SQL> insert into table accident
+  2  values(20511,12-12-2022,'mumbai');
+insert into table accident
+            *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> insert into accident
+  2  values(20511,12-12-2022,'mumbai');
+values(20511,12-12-2022,'mumbai')
+                  *
+ERROR at line 2:
+ORA-00932: inconsistent datatypes: expected DATE got NUMBER
+
+
+SQL> insert into accident
+  2  values(20511,'12-12-2023','mumbai');
+values(20511,'12-12-2023','mumbai')
+             *
+ERROR at line 2:
+ORA-01843: not a valid month
+
+
+SQL> insertt into accident
+SP2-0734: unknown command beginning "insertt in..." - rest of line ignored.
+SQL> insert into accident
+  2  values(20511,to_date('2024-Jan-13','yyyy-mm-dd'),'mumbai');
+
+1 row created.
+
+SQL>  insert into accident
+  2    2  values(20121,to_date('2022-Feb-13','yyyy-mm-dd'),'Delhi');
+  2  values(20121,to_date('2022-Feb-13','yyyy-mm-dd'),'Delhi')
+  *
+ERROR at line 2:
+ORA-00926: missing VALUES keyword
+
+
+SQL> insert into accident
+  2  values(20512,to_date('2022-Feb-14','yyyy-mm-dd'),'Mumbai');
+
+1 row created.
+
+SQL> insert into accident
+  2  values(20513,to_date('2023-Mar-23','yyyy-mm-dd'),'Kolkata');
+
+1 row created.
+
+SQL> insert into accident
+  2  values(20514,to_date('2024-Jan-14','yyyy-mm-dd'),'Chennai');
+
+1 row created.
+
+SQL> insert into accident
+  2  values(20515,to_date('2023-dec-16','yyyy-mm-dd'),'Surat');
+
+1 row created.
+
+SQL> insert into owns
+  2  values(1234,987);
+insert into owns
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (CCE522.SYS_C0040839) violated - parent key not
+found
+
+
+SQL> insert into owns
+  2  values('1234','987');
+insert into owns
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (CCE522.SYS_C0040839) violated - parent key not
+found
+
+
+SQL> insert into owns
+  2  values(1234,'987')
+  3  ;
+insert into owns
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (CCE522.SYS_C0040839) violated - parent key not
+found
+
+
+SQL> selct*from person;
+SP2-0734: unknown command beginning "selct*from..." - rest of line ignored.
+SQL> select* from person;
+
+DRIVER_ID            NAME
+-------------------- --------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+1234                 aayu
+delhi
+
+2345                 rajeev
+delhi
+
+3456                 nutan
+delhi
+
+
+DRIVER_ID            NAME
+-------------------- --------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+4567                 raj
+hyd
+
+5678                 sony
+delhi
+
+
+SQL> select* from car;
+
+REGNO                MODEL                                YEAR
+-------------------- ------------------------------ ----------
+987                  suzuki                               2024
+876                  audi                                 2023
+765                  xl6                                  2022
+654                  bmw                                  2023
+
+SQL> insert into owns
+  2  values(2345,876);
+insert into owns
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (CCE522.SYS_C0040839) violated - parent key not
+found
+
+
+SQL> commit
+  2  ;
+
+Commit complete.
+
+SQL> desc owns
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                     NOT NULL VARCHAR2(20)
+ DRIVER_ID                                 NOT NULL VARCHAR2(30)
+
+SQL> insert into owns
+  2  values(987,1234);
+
+1 row created.
+
+SQL> insert all into owns
+  2  values(876,2345)
+  3  into owns values(765,3456)
+  4  into owns values(654,4567);
+into owns values(654,4567)
+                         *
+ERROR at line 4:
+ORA-00928: missing SELECT keyword
+
+
+SQL> select* from dual;
+
+D
+-
+X
+
+SQL> insert into owns
+  2  into owns values(654,4567);
+into owns values(654,4567)
+*
+ERROR at line 2:
+ORA-00926: missing VALUES keyword
+
+
+SQL> insert all into owns
+  2  values(876,2345)
+  3  into owns values(765,5678)
+  4  select* from dual;
+
+2 rows created.
+
+SQL> inser into owns
+SP2-0734: unknown command beginning "inser into..." - rest of line ignored.
+SQL> insert into owns
+  2  values(654,6789);
+insert into owns
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (CCE522.SYS_C0040838) violated - parent key not
+found
+
+
+SQL> insert into owns?
+  2  ;
+insert into owns?
+                *
+ERROR at line 1:
+ORA-00911: invalid character
+
+
+SQL> insert into owns
+  2  values(654,4567);
+
+1 row created.
+
+SQL> insert all into participated
+  2  values(1234,987,20511,90000)
+  3  into pariticpated values(2345,876,70000)
+  4  ;
+
+*
+ERROR at line 4:
+ORA-00928: missing SELECT keyword
+
+
+SQL> insert into participated values(1234,987,90000);
+insert into participated values(1234,987,90000)
+            *
+ERROR at line 1:
+ORA-00947: not enough values
+
+
+SQL> insert into participated values(1234,987,20511,90000);
+insert into participated values(1234,987,20511,90000)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (CCE522.SYS_C0040834) violated - parent key not
+found
+
+
+SQL> desc participated
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                     NOT NULL VARCHAR2(20)
+ REPORT_NUMBER                             NOT NULL NUMBER(38)
+ DAMAGE_AMOUNT                                      NUMBER(38)
+ DRIVER_ID                                 NOT NULL VARCHAR2(30)
+
+SQL> insert into participated values(987,20511,90000,1234);
+
+1 row created.
+
+SQL> insert into participated values(876,20512,91000,2345);
+
+1 row created.
+
+SQL> insert into participated values(765,20513,50500,5678);
+
+1 row created.
+
+SQL> insert into participated values(654,20514,20000,4567);
+
+1 row created.
+
+SQL>
