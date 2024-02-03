@@ -1,0 +1,528 @@
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Fri Feb 2 11:26:47 2024
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+Enter user-name: cce522@ictorcl
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Enter user-name: cce522@ictorcl
+Enter password:
+Last Successful login time: Sat Jan 27 2024 13:59:17 +05:30
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+SQL> select* from person
+  2  :
+  3  :
+  4  ;
+:
+*
+ERROR at line 2:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select* from person;
+
+DRIVER_ID            NAME
+-------------------- --------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+1234                 aayu
+delhi
+
+2345                 rajeev
+delhi
+
+3456                 nutan
+delhi
+
+
+DRIVER_ID            NAME
+-------------------- --------------------------------------------------
+ADDRESS
+--------------------------------------------------------------------------------
+4567                 raj
+hyd
+
+5678                 sony
+delhi
+
+
+SQL> update participated
+  2  set damage_amount=25000
+  3  where regno=9875;
+
+0 rows updated.
+
+SQL> update participated
+  2  set damage_amount=25000
+  3  where regno=9876;
+
+0 rows updated.
+
+SQL> select* from participated;
+
+REGNO                REPORT_NUMBER DAMAGE_AMOUNT DRIVER_ID
+-------------------- ------------- ------------- ------------------------------
+987                          20511         90000 1234
+876                          20512         91000 2345
+765                          20513         50500 5678
+654                          20514         20000 4567
+
+SQL> update participated
+  2  set damage_amount=25000
+  3  where regno=987;
+
+1 row updated.
+
+SQL> delete from accident
+  2  where extract(year from accd_date)=2020;
+
+0 rows deleted.
+
+SQL> select* from accident;
+
+REPORT_NUMBER ACCD_DATE LOCATION
+------------- --------- --------------------------------------------------
+        20511 13-JAN-24 mumbai
+        20512 14-FEB-22 Mumbai
+        20513 23-MAR-23 Kolkata
+        20514 14-JAN-24 Chennai
+        20515 16-DEC-23 Surat
+
+SQL> delete from accident
+  2  where extract(year from accd_date)=2024;
+delete from accident
+*
+ERROR at line 1:
+ORA-02292: integrity constraint (CCE522.SYS_C0040834) violated - child record
+found
+
+
+SQL> delete from accident
+  2  where extract(year from accd_date)=24;
+
+0 rows deleted.
+
+SQL> delete from accident
+  2  where extract(year from accd_date)=2021;
+
+0 rows deleted.
+
+SQL> delete from accident
+  2  where extract(year from accd_date)=2024;
+delete from accident
+*
+ERROR at line 1:
+ORA-02292: integrity constraint (CCE522.SYS_C0040834) violated - child record
+found
+
+
+SQL> delete from accident
+  2  where extract(year from accd_date)='2022';
+delete from accident
+*
+ERROR at line 1:
+ORA-02292: integrity constraint (CCE522.SYS_C0040834) violated - child record
+found
+
+
+SQL> alter participated
+  2  ;
+alter participated
+      *
+ERROR at line 1:
+ORA-00940: invalid ALTER command
+
+
+SQL> select extract(year from accd_date);
+select extract(year from accd_date)
+                                  *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> select from extract(year from accd_date);
+select from extract(year from accd_date)
+       *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select* from extract(year from accd_date);
+select* from extract(year from accd_date)
+                               *
+ERROR at line 1:
+ORA-00904: "ACCD_DATE": invalid identifier
+
+
+SQL> select* extract(year from accd_date) from accident;
+select* extract(year from accd_date) from accident
+        *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> select extract(year from accd_date) from accident;
+
+EXTRACT(YEARFROMACCD_DATE)
+--------------------------
+                      2024
+                      2022
+                      2023
+                      2024
+                      2023
+
+SQL> delete from accident
+  2  where (extract(year from accd_date) from accident)=2022;
+where (extract(year from accd_date) from accident)=2022
+                                    *
+ERROR at line 2:
+ORA-00920: invalid relational operator
+
+
+SQL> delete from accident
+  2  where extract(year from accd_date) from accident;
+where extract(year from accd_date) from accident
+                                   *
+ERROR at line 2:
+ORA-00920: invalid relational operator
+
+
+SQL> delete from accident
+  2  where extract(year from accd_date) ;
+where extract(year from accd_date)
+                                  *
+ERROR at line 2:
+ORA-00920: invalid relational operator
+
+
+SQL> delete from accident
+  2  where extract(year from accd_date)=2022 ;
+delete from accident
+*
+ERROR at line 1:
+ORA-02292: integrity constraint (CCE522.SYS_C0040834) violated - child record
+found
+
+
+SQL> alter accident
+  2  on delete cascade;
+alter accident
+      *
+ERROR at line 1:
+ORA-00940: invalid ALTER command
+
+
+SQL> update accident
+  2  on delete cascade;
+on delete cascade
+*
+ERROR at line 2:
+ORA-00971: missing SET keyword
+
+
+SQL> update accident
+  2  You can not add ON DELETE CASCADE to an already existing constraint. You will have to drop and re-create the constraint. The documentation shows that the MODIFY CONSTRAINT clause can only modify the state of a constraint (i-e: ENABLED/DISABLED...).
+  3  :
+  4  ;
+SP2-0552: Bind variable "ENABLED" not declared.
+SQL> commit;
+
+Commit complete.
+
+SQL> drop it from child first then parent table if delete on cascade is not used
+  2  ;
+drop it from child first then parent table if delete on cascade is not used
+     *
+ERROR at line 1:
+ORA-00950: invalid DROP option
+
+
+SQL> alter table participated
+  2  add check (report_number>0);
+
+Table altered.
+
+SQL> alter table owns
+  2  add numberOfvehicles int;
+
+Table altered.
+
+SQL> alter table owns
+  2  drop numberOfvehicles;
+drop numberOfvehicles
+     *
+ERROR at line 2:
+ORA-00905: missing keyword
+
+
+SQL> alter table owns
+  2  drop column numberOfvehicles;
+
+Table altered.
+
+SQL> create table customer(cust int,cname varchar(50),city varchar(30),primary key(cust));
+
+Table created.
+
+SQL> create table orders(order1 int,odate date,cust int,ordamt int,primary key(order1));
+
+Table created.
+
+SQL> alter table orders
+  2  add foreign key(cust) references customers;
+add foreign key(cust) references customers
+                                 *
+ERROR at line 2:
+ORA-00942: table or view does not exist
+
+
+SQL> alter table orders
+  2  add foreign key(cust) references customer;
+
+Table altered.
+
+SQL> alter table participated
+  2  drop column report_number;
+drop column report_number
+            *
+ERROR at line 2:
+ORA-12991: column is referenced in a multi-column constraint
+
+
+SQL> // alter table participated
+drop column report_number
+            *
+ERROR at line 2:
+ORA-12991: column is referenced in a multi-column constraint
+
+
+SQL> /alter table partiticpated,drop columnreport_number
+SP2-0734: unknown command beginning "/alter tab..." - rest of line ignored.
+SQL> / delete from accident where ectract(year from accd_date=2024)
+drop column report_number
+            *
+ERROR at line 2:
+ORA-12991: column is referenced in a multi-column constraint
+
+
+SQL> drop table customer;
+drop table customer
+           *
+ERROR at line 1:
+ORA-02449: unique/primary keys in table referenced by foreign keys
+
+
+SQL> drop table orders;
+
+Table dropped.
+
+SQL> drop table customer;
+
+Table dropped.
+
+SQL> create table orders(order1 int,odate date,cust int,ordamt int,primary key(order1),on delete cascade);
+create table orders(order1 int,odate date,cust int,ordamt int,primary key(order1),on delete cascade)
+                                                                                  *
+ERROR at line 1:
+ORA-00904: : invalid identifier
+
+
+SQL> create table orders(order1 int,odate date,cust int,ordamt int,primary key(order1));
+
+Table created.
+
+SQL> create table customer(cust int,cname varchar(50),city varchar(30),primary key(cust));
+
+Table created.
+
+SQL> add foreign key(cust) references customers on delete cascade;
+SP2-0734: unknown command beginning "add foreig..." - rest of line ignored.
+SQL> alter table orders
+  2  add foreign key(cust) references customers on delete cascade;
+add foreign key(cust) references customers on delete cascade
+                                 *
+ERROR at line 2:
+ORA-00942: table or view does not exist
+
+
+SQL> alter table orders
+  2  add foreign key(cust) references customer on delete cascade;
+
+Table altered.
+
+SQL> create table item(itemno int,unitprice int,primary key(itemno));
+
+Table created.
+
+SQL> create table shipment(order1 int,warehouseno int,shipdate date , primary key(order1));
+
+Table created.
+
+SQL> alter table shipment
+  2  add foreign key(order1) references orders on delete cascade;
+
+Table altered.
+
+SQL> create table order_items(order1 int, itemno int,qty int,primary key(order1,itemno));
+
+Table created.
+
+SQL> alter table order_items
+  2  add foreign key(order1) references orders on delete cascade;
+
+Table altered.
+
+SQL> alter table order_items
+  2  add foreign key(itemno) references item on delete cascade;
+
+Table altered.
+
+SQL> create table warehouse(warehouseno int, city varchar(30),primary key(warehouseno));
+
+Table created.
+
+SQL> alter table shipment
+  2  add foreign key(warehouseno) references warehouse on delete cascade
+  3  ;
+
+Table altered.
+
+SQL> insert all into customer
+  2  values('Harshi','Delhi')
+  3  into customer values('aayu','hyd')
+  4  into customer values('rajeev','pune')
+  5  into customer values('nutan','mumbai')
+  6  into customer values('raj','manipal')
+  7  select* from dual;
+insert all into customer
+                *
+ERROR at line 1:
+ORA-00947: not enough values
+
+
+SQL> insert all into customer
+  2  values(1,'Harshi','Delhi')
+  3  into customer values(2,'aayu','hyd')
+  4  into customer values(3,'rajeev','pune')
+  5  into customer values(4,'nutan','mumbai')
+  6  into customer values(5,'raj','manipal')
+  7  select* from dual;
+
+5 rows created.
+
+SQL> insert all
+  2  into orders values(1234,to_date('2024-Jan-13','yyyy-mm-dd'),1,3200)
+  3  into orders values(2345,to_date('2024-Jan-11','yyyy-mm-dd'),2,1000)
+  4  into orders values(3456,to_date('2024-Feb-12','yyyy-mm-dd'),3,4000)
+  5  into orders values(4567,to_date('2024-Feb-11','yyyy-mm-dd'),4,5600)
+  6  into orders values(5678,to_date('2024-Feb-10','yyyy-mm-dd'),5,2600)
+  7  select* from dual;
+
+5 rows created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> insert all
+  2  into item values(987,30)
+  3  into item values(876,440)
+  4  into item values(765,40)
+  5  into item values(654,300)
+  6  into item values(543,100)
+  7  select* from dual;
+
+5 rows created.
+
+SQL> insert all
+  2  into order_items values(1234,987,2)
+  3  into order_items values(2345,876,3)
+  4  into order_items values(3456,765,1)
+  5  into order_items values(4567,654,4)
+  6  into order_items values(5678,543,6)
+  7  select* from dual;
+
+5 rows created.
+
+SQL> insert all
+  2  into shipment values(1234,11,to_date('2024-Jan-15','yyyy-mm-dd')
+  3  into shipment values(2345,12,to_date('2024-Jan-13','yyyy-mm-dd')
+  4  into shipment values(3456,13,to_date('2024-Feb-13','yyyy-mm-dd')
+  5  into shipment values(4567,14,to_date('2024-Feb-13','yyyy-mm-dd')
+  6  into shipment values(6789,15,to_date('2024-Feb-12','yyyy-mm-dd')
+  7  select* from dual;
+into shipment values(2345,12,to_date('2024-Jan-13','yyyy-mm-dd')
+*
+ERROR at line 3:
+ORA-00917: missing comma
+
+
+SQL> insert all
+  2  into shipment values(1234,11,to_date('2024-Jan-15','yyyy-mm-dd'))
+  3  into shipment values(2345,12,to_date('2024-Jan-13','yyyy-mm-dd'))
+  4  into shipment values(3456,13,to_date('2024-Feb-13','yyyy-mm-dd'))
+  5  into shipment values(4567,14,to_date('2024-Feb-13','yyyy-mm-dd'))
+  6  into shipment values(5678,15,to_date('2024-Feb-12','yyyy-mm-dd'))
+  7  select* from dual;
+insert all
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (CCE522.SYS_C0043606) violated - parent key not
+found
+
+
+SQL> insert all
+  2  into warehouse values(11,'kolkata')
+  3  into warehouse values(12,'kashmir')
+  4  into warehouse values(13,'ranchi')
+  5  into warehouse values(14,'mumbai')
+  6  into warehouse values(15,'gurgaon')
+  7  select* from dual;
+
+5 rows created.
+
+SQL> insert all
+  2  into shipment values(1234,11,to_date('2024-Jan-15','yyyy-mm-dd'))
+  3  into shipment values(2345,12,to_date('2024-Jan-13','yyyy-mm-dd'))
+  4  into shipment values(3456,13,to_date('2024-Feb-13','yyyy-mm-dd'))
+  5  into shipment values(4567,14,to_date('2024-Feb-13','yyyy-mm-dd'))
+  6  into shipment values(5678,15,to_date('2024-Feb-12','yyyy-mm-dd'))
+  7  select* from dual;
+
+5 rows created.
+
+SQL> select cname from customer;
+
+CNAME
+--------------------------------------------------
+Harshi
+aayu
+rajeev
+nutan
+raj
+
+SQL> select count* from orders
+  2  ;
+select count* from orders
+              *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select count* orders;
+select count* orders
+                   *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL>
