@@ -1,0 +1,328 @@
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Sat Feb 10 14:14:14 2024
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+Enter user-name: cce522@ictorcl
+Enter password:
+Last Successful login time: Sat Feb 03 2024 14:04:10 +05:30
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+SQL> select* from customer ;
+
+      CUST CNAME
+---------- --------------------------------------------------
+CITY
+------------------------------
+         1 Harshi
+Delhi
+
+         2 aayu
+hyd
+
+         3 rajeev
+pune
+
+
+      CUST CNAME
+---------- --------------------------------------------------
+CITY
+------------------------------
+         4 nutan
+mumbai
+
+         5 raj
+manipal
+
+
+SQL> select* from orders
+  2  ;
+
+    ORDER1 ODATE           CUST     ORDAMT
+---------- --------- ---------- ----------
+      1234 13-JAN-24          1       3200
+      2345 11-JAN-24          2       1000
+      3456 12-FEB-24          3       4000
+      4567 11-FEB-24          4       5600
+      5678 10-FEB-24          5       2600
+
+SQL> select* from items;
+select* from items
+             *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select* from item;
+
+no rows selected
+
+SQL> insert all into item
+  2  values(12,100)
+  3  into customer values(123,600)
+  4  into customer values(13,500)
+  5  into customer values(43,590)
+  6  into customer values(53,890)
+  7  select* from dual;
+into customer values(123,600)
+     *
+ERROR at line 3:
+ORA-00947: not enough values
+
+
+SQL> desc item;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ITEMNO                                    NOT NULL NUMBER(38)
+ UNITPRICE                                          NUMBER(38)
+
+SQL> insert all into item
+  2  values(12,100)
+  3  into item values(123,600)
+  4  into item values(14,800)
+  5  into item values(19,700)
+  6  into item values(79,790)
+  7  select* from dual;
+
+5 rows created.
+
+SQL> desc order_items;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ORDER1                                    NOT NULL NUMBER(38)
+ ITEMNO                                    NOT NULL NUMBER(38)
+ QTY                                                NUMBER(38)
+
+SQL> insert all into order_items
+  2  values(1234,12,2)
+  3  into order_items values(2345,123,6)
+  4  into order_items values(345,14,4)
+  5  into order_items values(345,14,4);
+into order_items values(345,14,4)
+                                *
+ERROR at line 5:
+ORA-00928: missing SELECT keyword
+
+
+SQL> insert all into order_items
+  2  values(1234,12,2)
+  3  into order_items values(2345,123,6)
+  4  into order_items values(3456,14,7)
+  5  into order_items values(4567,19,2)
+  6  into order_items values(5678,79,1)
+  7  select* from dual;
+
+5 rows created.
+
+SQL> insert all into shipment
+  2  ;;
+;
+*
+ERROR at line 2:
+ORA-00928: missing SELECT keyword
+
+
+SQL> insert all into warehouse
+  2  ;
+
+*
+ERROR at line 2:
+ORA-00928: missing SELECT keyword
+
+
+SQL> select* from warehouse;
+
+no rows selected
+
+SQL> insert all into warehouse
+  2  values(11,'mumbai')
+  3  into warehouse values(22,'delhi')
+  4  into warehouse values(33,'hyd')
+  5  into warehouse values(44,'chennai')
+  6  into warehouse values(55,'kolkata')
+  7  select* from dual ;
+
+5 rows created.
+
+SQL> insert all into shipment
+  2  values(1234,11,to_date('2024-Jan-13','yyyy-mm-dd'))
+  3  into warehouse values(2345,22,to_date('2024-Jan-11','yyyy-mm-dd'))
+  4  into warehouse values(3456,33,to_date('2024-Jan-17','yyyy-mm-dd'))
+  5  into warehouse values(4567,44,to_date('2024-Jan-10','yyyy-mm-dd'))
+  6  into warehouse values(5678,55,to_date('2024-Jan-18','yyyy-mm-dd'))
+  7  select* from dual;
+into warehouse values(2345,22,to_date('2024-Jan-11','yyyy-mm-dd'))
+     *
+ERROR at line 3:
+ORA-00913: too many values
+
+
+SQL> insert into shipment values(1234,11,to_date('2024-Jan-13','yyyy-mm-dd'));
+
+1 row created.
+
+SQL> insert into shipment values(2345,22,to_date('2024-Jan-12','yyyy-mm-dd'));
+
+1 row created.
+
+SQL> insert into shipment values(3465,33,to_date('2024-Jan-15','yyyy-mm-dd'));
+insert into shipment values(3465,33,to_date('2024-Jan-15','yyyy-mm-dd'))
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (CCE522.SYS_C0043565) violated - parent key not
+found
+
+
+SQL> insert into shipment values(3456,33,to_date('2024-Jan-15','yyyy-mm-dd'));
+
+1 row created.
+
+SQL> insert into shipment values(4567,44,to_date('2024-Jan-15','yyyy-mm-dd'));
+
+1 row created.
+
+SQL> insert into shipment values(5678,55,to_date('2024-Jan-15','yyyy-mm-dd'));
+
+1 row created.
+
+SQL> select* from car;
+
+REGNO                MODEL                                YEAR
+-------------------- ------------------------------ ----------
+987                  suzuki                               2024
+876                  audi                                 2023
+765                  xl6                                  2022
+654                  bmw                                  2023
+
+SQL> select from car
+  2  model;
+select from car
+       *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select model from car ;
+
+MODEL
+------------------------------
+suzuki
+audi
+xl6
+bmw
+
+SQL> select unique model from car;
+
+MODEL
+------------------------------
+audi
+xl6
+bmw
+suzuki
+
+SQL> select distinct model from car ;
+
+MODEL
+------------------------------
+audi
+xl6
+bmw
+suzuki
+
+SQL> select count(*) model from car;
+
+     MODEL
+----------
+         4
+
+SQL> select count(*) from accident;
+
+  COUNT(*)
+----------
+         5
+
+SQL> select count(*) from accident where year=2008;
+select count(*) from accident where year=2008
+                                    *
+ERROR at line 1:
+ORA-00904: "YEAR": invalid identifier
+
+
+SQL> select* from accident;
+
+REPORT_NUMBER ACCD_DATE LOCATION
+------------- --------- --------------------------------------------------
+        20511 13-JAN-24 mumbai
+        20512 14-FEB-22 Mumbai
+        20513 23-MAR-23 Kolkata
+        20514 14-JAN-24 Chennai
+        20515 16-DEC-23 Surat
+
+SQL> select count(*) from accident where year=24;
+select count(*) from accident where year=24
+                                    *
+ERROR at line 1:
+ORA-00904: "YEAR": invalid identifier
+
+
+SQL> select from accident where model='xl6';
+select from accident where model='xl6'
+       *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select* from accident where model='xl6';
+select* from accident where model='xl6'
+                            *
+ERROR at line 1:
+ORA-00904: "MODEL": invalid identifier
+
+
+SQL> selct model,count(model)
+SP2-0734: unknown command beginning "selct mode..." - rest of line ignored.
+SQL> selct model,count(model)
+SP2-0734: unknown command beginning "selct mode..." - rest of line ignored.
+SQL> select model , count(model)
+  2  from car natural join participated
+  3  where model='xl6'
+  4  group by model;
+
+MOD COUNT(MODEL)
+--- ------------
+xl6            1
+
+SQL> select* from accident where Extract (Year from accd_date)=2008;
+
+no rows selected
+
+SQL> select* from accident where Extract (Year from accd_date)=2022;
+
+REPORT_NUMBER ACCD_DATE LOCATION
+------------- --------- --------------------------------------------------
+        20512 14-FEB-22 Mumbai
+
+SQL> select name,damage_amount
+  2  from person natural joins participated
+  3  ;
+from person natural joins participated
+                    *
+ERROR at line 2:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select name,damage_amount
+  2  from person natural join participated;
+
+NAME                                               DAMAGE_AMOUNT
+-------------------------------------------------- -------------
+aayu                                                       25000
+rajeev                                                     91000
+raj                                                        20000
+sony                                                       50500
+
+SQL>
