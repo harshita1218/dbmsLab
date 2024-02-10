@@ -1,0 +1,31 @@
+E:\220953074\Lab 2\banking\banking\bin\Debug\banking.exe.config
+E:\220953074\Lab 2\banking\banking\bin\Debug\banking.exe
+E:\220953074\Lab 2\banking\banking\bin\Debug\banking.pdb
+E:\220953074\Lab 2\banking\banking\obj\Debug\banking.Form1.resources
+E:\220953074\Lab 2\banking\banking\obj\Debug\banking.Properties.Resources.resources
+E:\220953074\Lab 2\banking\banking\obj\Debug\banking.csproj.GenerateResource.Cache
+E:\220953074\Lab 2\banking\banking\obj\Debug\banking.exe
+E:\220953074\Lab 2\banking\banking\obj\Debug\banking.pdb
+E:\220953074\Lab 2\banking\banking\obj\Debug\banking.Form2.resources
+F:\BDSM\Avani is the bestestestestest\Lab 2\banking\banking\bin\Debug\banking.exe.config
+F:\BDSM\Avani is the bestestestestest\Lab 2\banking\banking\obj\Debug\banking.exe
+F:\BDSM\Avani is the bestestestestest\Lab 2\banking\banking\obj\Debug\banking.pdb
+F:\BDSM\Avani is the bestestestestest\Lab 2\banking\banking\bin\Debug\banking.exe
+F:\BDSM\Avani is the bestestestestest\Lab 2\banking\banking\bin\Debug\banking.pdb
+F:\BDSM\Avani is the bestestestestest\Lab 2\banking\banking\obj\Debug\banking.Form1.resources
+F:\BDSM\Avani is the bestestestestest\Lab 2\banking\banking\obj\Debug\banking.Form2.resources
+F:\BDSM\Avani is the bestestestestest\Lab 2\banking\banking\obj\Debug\banking.Form3.resources
+F:\BDSM\Avani is the bestestestestest\Lab 2\banking\banking\obj\Debug\banking.Properties.Resources.resources
+F:\BDSM\Avani is the bestestestestest\Lab 2\banking\banking\obj\Debug\banking.csproj.GenerateResource.Cache
+D:\BDSM\Avani is the bestestestestest\Lab 2\banking\banking\bin\Debug\banking.exe.config
+D:\BDSM\Avani is the bestestestestest\Lab 2\banking\banking\bin\Debug\banking.exe
+D:\BDSM\Avani is the bestestestestest\Lab 2\banking\banking\bin\Debug\banking.pdb
+D:\BDSM\Avani is the bestestestestest\Lab 2\banking\banking\obj\Debug\banking.csproj.AssemblyReference.cache
+D:\BDSM\Avani is the bestestestestest\Lab 2\banking\banking\obj\Debug\banking.Form1.resources
+D:\BDSM\Avani is the bestestestestest\Lab 2\banking\banking\obj\Debug\banking.Form2.resources
+D:\BDSM\Avani is the bestestestestest\Lab 2\banking\banking\obj\Debug\banking.Form3.resources
+D:\BDSM\Avani is the bestestestestest\Lab 2\banking\banking\obj\Debug\banking.Properties.Resources.resources
+D:\BDSM\Avani is the bestestestestest\Lab 2\banking\banking\obj\Debug\banking.csproj.GenerateResource.cache
+D:\BDSM\Avani is the bestestestestest\Lab 2\banking\banking\obj\Debug\banking.csproj.CoreCompileInputs.cache
+D:\BDSM\Avani is the bestestestestest\Lab 2\banking\banking\obj\Debug\banking.exe
+D:\BDSM\Avani is the bestestestestest\Lab 2\banking\banking\obj\Debug\banking.pdb
