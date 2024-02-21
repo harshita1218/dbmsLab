@@ -1,0 +1,170 @@
+create table Student(
+regno varchar(20),
+name varchar(50),
+major varchar(20),
+bdate date,
+primary key (regno)
+);
+
+create table Course(
+course# int,
+cname varchar(30),
+dept varchar(30),
+primary key (course#)
+);
+
+create table Enroll(
+regno varchar(20),
+course# int,
+foreign key (regno) references Student(regno),
+foreign key (course#) references Course(course#)
+);
+
+create table Book_Adoption(
+course# int,
+sem int,
+book_isbn int,
+foreign key (course#) references Course(course#),
+primary key (book_isbn)
+);
+
+create table Text(
+book_isbn int,
+booktitle varchar(50),
+publisher varchar(50),
+author varchar(50),
+foreign key (book_isbn) references Book_Adoption(book_isbn)
+);
+
+insert into Student
+values(10,'Shreeya','IT','7 Nov 2003');
+insert into Student
+values(11,'Ayushi','IT','18 Jun 2004');
+insert into Student
+values(12,'Srishti','CCE','17 May 2003');
+insert into Student
+values(13,'Mukta','DSE','17 March 2004');
+insert into Student
+values(14,'Nazine','Aero','25 Nov 2003');
+
+insert into Course
+values(111,'DS','ICT');
+insert into Course
+values(222,'AIML','CSE');
+insert into Course
+values(333,'Fluid','AeroTech');
+insert into Course
+values(444,'OS','ICT');
+insert into Course
+values(555,'Cybersecurity','Data Science');
+
+insert into Enroll
+values(11,111);
+insert into Enroll
+values(13,222);
+insert into Enroll
+values(11,444);
+insert into Enroll
+values(14,555);
+insert into Enroll
+values(12,333);
+insert into Enroll
+values(12,333);
+insert into Enroll
+values(12,444);
+
+insert into Book_Adoption
+values(111,3,90);
+insert into Book_Adoption
+values(222,3,91);
+insert into Book_Adoption
+values(444,4,92);
+insert into Book_Adoption
+values(111,3,93);
+insert into Book_Adoption
+values(333,4,94);
+
+insert into text
+values(90,'data and communication','XXX','AB');
+insert into text
+values(91,'Data Structures','YYY','CD');
+insert into text
+values(92,'Fluid dynamics','WWW','EF');
+insert into text
+values(93,'Cryptography','VVV','GH');
+insert into text
+values(94,'Engineering maths 1','ZZZ','IJ');
+insert into text
+values(94,'Engineering maths 2','ZZZ','IJ');
+
+a.
+select distinct course#,cname
+from Course Natural Join Book_Adoption
+where exists
+(select *
+from Text
+where Book_Adoption.book_isbn=text.book_isbn
+group by book_isbn
+having count(book_isbn)>1);
+
+b.
+select Course.course#,Course.dept
+from Course Join Book_Adoption
+On Course.course#=Book_Adoption.course#
+where exists
+(select publisher
+from Text
+where Text.book_isbn=Book_Adoption.book_isbn and Text.publisher='ZZZ');
+
+c.
+select s.name
+from Student s
+Join Enroll On s.regno=Enroll.regno
+where exists
+(select Course.course#
+from Course
+where Course.course#=Enroll.course#
+group by Course.course#
+having count(Distinct Course.dept)>1
+);
+
+d.
+select s.name
+from Student s
+where regno NOT IN (Select regno from Enroll);
+
+e.
+select T.booktitle
+from Text T,Book_Adoption,Course
+where T.book_isbn=Book_Adoption.book_isbn and Book_Adoption.course#=Course.course#;
+
+f.
+select course#
+from Book_Adoption NATURAL JOIN Text
+where Text.publisher='ZZZ'
+group by course#
+having count(Text.publisher)>1;
+
+g.
+select regno 
+from Enroll natural join Book_Adoption 
+group by Enroll.regno 
+having count(book_isbn) >= all 
+(select count(book_isbn) 
+from enroll natural join book_adoption 
+group by enroll.regno);
+
+h.
+select publisher, count(book_isbn)
+from Text
+group by publisher;
+
+i.
+select distinct regno 
+from enroll
+where regno not in 
+(select regno 
+from enroll 
+where course# not in 
+(select course#
+from book_adoption));
